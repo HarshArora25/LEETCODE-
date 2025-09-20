@@ -7,15 +7,18 @@ public:
             x.push_back(matrix[i][j]);
         }
        } 
-       priority_queue<int,vector<int>,greater<int>>p;
-       for(int i:x)
-       p.push(i);
-       int y=-1;
-       while(k){
-        y=p.top();
-        p.pop();
-        k--;
-       }
-       return y;
+     priority_queue<int>p;
+     for(int i=0;i<k;i++)
+     p.push(x[i]);
+    for(int i=k;i<x.size();i++){
+        int z=p.top();
+        if(z>x[i]){
+            p.pop();
+            p.push(x[i]);
+        }
+
+    }
+    return p.top();
+
     }
 };
