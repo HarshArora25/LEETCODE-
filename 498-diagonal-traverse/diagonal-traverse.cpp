@@ -8,7 +8,7 @@ public:
             }
         }
         vector<int>x;
-        for(int k=0;k<mat.size()+mat[0].size();k++){
+        for(int k=0;k<mat.size()+mat[0].size()-1;k++){
             if(k%2==0)
             reverse(mpp[k].begin(),mpp[k].end());
             for(int val:mpp[k])
