@@ -78,20 +78,13 @@ private:
 
 public:
     int maximumGain(string s, int x, int y) {
-
         string maxstr = x > y ? "ab" : "ba";
         string minstr = x > y ? "ba" : "ab";
-
         string neww = removeSubstr(s, maxstr);
-
         int removed1 = s.length() - neww.length();
-
         string new1 = removeSubstr(neww, minstr);
-
         int removed2 = neww.length() - new1.length();
-
         int score = (removed1/2)*max(x,y) + (removed2/2)*min(x,y);
-
         return score;
     }
 };
