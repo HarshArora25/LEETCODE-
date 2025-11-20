@@ -10,14 +10,21 @@
  * };
  */
 class Solution {
-    bool isMirror(TreeNode* t1, TreeNode* t2){
-        if(!t1 && !t2) return true;
-        if(!t1 || !t2) return false;
-        return  (t1-> val==t2->val) && isMirror(t1->left, t2->right) && isMirror(t1->right, t2->left);
+    private:
+    bool btaobtao(TreeNode* a,TreeNode* b){
+         if(a==NULL && b==NULL) 
+        return true;
+        if(a==NULL || b==NULL)
+        return false;
+        if(a->val !=b->val)
+        return false;
+        return btaobtao(a->left,b->right) && btaobtao(a->right, b->left);
     }
 public:
     bool isSymmetric(TreeNode* root) {
-     if(root==NULL) return true;
-     return isMirror(root->left,root->right);
+      if(root==NULL) return NULL;
+      TreeNode* a=root->left;
+      TreeNode* b=root->right;
+      return btaobtao(a,b); 
     }
 };
