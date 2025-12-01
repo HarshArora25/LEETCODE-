@@ -1,24 +1,25 @@
 class Solution {
+private:
+  bool btabta(vector<int>& nums,int idx,int find, vector<vector<int>>&dp){
+    if(find==0) return true;
+    if(idx<0) return false;
+        if(dp[idx][find] !=-1) return dp[idx][find];
+    bool nottake=btabta(nums,idx-1,find,dp);
+    bool take=false;
+    if(find>=nums[idx]){
+        take=btabta(nums,idx-1,find-nums[idx],dp);
+    }
+    return dp[idx][find]=take || nottake;
+  }
 public:
     bool canPartition(vector<int>& nums) {
-      int sum=0;
-      for(int i=0;i<nums.size();i++){
-        sum=sum+nums[i];
-      }  
-      if(sum % 2 !=0) return false;
-      int target=sum/2;
-      int n=nums.size();
-      vector<vector<int>>dp(n+1,vector<int>(target+1,false));
-      for(int i=0;i<=n;i++)
-      dp[i][0]=true;
-      for(int i=1;i<=n;i++){
-        for(int j=1;j<=target;j++){
-            if(j >=nums[i-1])
-          dp[i][j]= dp[i-1][j-nums[i-1]] || dp[i-1][j];
-          else
-          dp[i][j]=dp[i-1][j];
-        }
+      int idx=nums.size()-1;
+      int total=0;
+      for(int i=0;i<=idx;i++){
+        total+=nums[i];
       }
-      return dp[n][target];
+      if(total%2 !=0) return false;
+      vector<vector<int>>dp(idx+1,vector<int>(total/2+1,-1));
+    return  btabta(nums,idx,total/2,dp);  
     }
 };
