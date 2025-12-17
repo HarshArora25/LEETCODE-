@@ -1,28 +1,21 @@
 class Solution {
 public:
-     void findkro(vector<vector<int>>& grid, int m, int n, int i, int j, vector<vector<int>>& dp) {
-   for(int i=0;i<m;i++){
-    for(int j=0;j<n;j++){
-        int up=0,down=0;
-       if(i==0 && j==0) dp[i][j]=grid[i][j];
-       else{
-        if(i>0) up=dp[i-1][j];
-        else up=1e9;
-        if(j>0) down=dp[i][j-1];
-        else
-        down=1e9;
-        dp[i][j]=grid[i][j] + min(up,down);
-       }
-    }
-   }
-}
-
     int minPathSum(vector<vector<int>>& grid) {
-      int m=grid.size();
-      int n=grid[0].size();
-      vector<vector<int>>dp(m,vector<int>(n,-1));
-       findkro(grid,m,n,0,0,dp); 
-      return dp[m-1][n-1] ;
-     
+       int n=grid.size();
+       int m=grid[0].size();
+       int left=1e9,uppr=1e9;
+       vector<vector<long long>> dp(n, vector<long long>(m, -1)); 
+       dp[n-1][m-1]=grid[n-1][m-1];
+      for(int i=n-1;i>=0;i--){
+    for(int j=m-1;j>=0;j--){
+        if(i==n-1 && j==m-1) continue;
+
+        long long right = (j+1 < m) ? dp[i][j+1] : 1e9;
+        long long down  = (i+1 < n) ? dp[i+1][j] : 1e9;
+
+        dp[i][j] = grid[i][j] + min(right, down);
+    }
+}
+     return dp[0][0];
     }
 };
