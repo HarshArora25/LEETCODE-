@@ -1,16 +1,17 @@
 class Solution {
 public:
-    int helper(vector<int>& nums,int find,int n){
+    int helper(vector<int>& nums,int find,int n,vector<vector<int>>&dp){
         if(n==0){
             if(find==0 && nums[0]==0) return 2;
             if(find==0 || find==nums[0]) return 1;
            return 0;
         }
-        int nottake=helper(nums,find,n-1);
+        if(dp[n][find] !=-1) return dp[n][find];
+        int nottake=helper(nums,find,n-1,dp);
         int take=0;
         if(nums[n]<=find)
-        take=helper(nums,find-nums[n],n-1);
-        return take+nottake;
+        take=helper(nums,find-nums[n],n-1,dp);
+        return dp[n][find]=take+nottake;
     }
     int findTargetSumWays(vector<int>& nums, int target) {
         int n=nums.size();
@@ -20,6 +21,7 @@ public:
         }
         if(target > totsum || (totsum - target) % 2 != 0) return 0;
         int find=(totsum-target)/2;
-       return helper(nums,find,n-1);
+        vector<vector<int>>dp(n,vector<int>(find+1,-1));
+       return helper(nums,find,n-1,dp);
     }
 };
