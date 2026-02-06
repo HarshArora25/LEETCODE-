@@ -10,20 +10,17 @@
  * };
  */
 class Solution {
-    private:
-    TreeNode* count(vector<int>& preorder,int low,int high,int& index){
-     if(preorder.size()==index || low>preorder[index] || high<preorder[index])
-     return NULL;
-     TreeNode* root=new TreeNode(preorder[index++]);
-     root->left=count(preorder,low,root->val,index);
-     root->right=count(preorder,root->val,high,index);
-     return root;
-    }
+private:
+   TreeNode* helper(vector<int>& preorder,int& i,int bound){
+     if(i==preorder.size() || preorder[i]>bound) return NULL;
+    TreeNode* root=new TreeNode(preorder[i++]);
+    root->left= helper(preorder,i,root->val);
+    root->right=helper(preorder,i,bound);
+    return root;
+   }
 public:
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-       int low=INT_MIN;
-       int high= INT_MAX;
-       int index=0;
-       return count(preorder,low,high,index);
+        int i=0;
+     return helper(preorder,i,1e9);  
     }
 };
