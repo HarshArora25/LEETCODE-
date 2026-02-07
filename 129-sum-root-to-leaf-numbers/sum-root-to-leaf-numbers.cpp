@@ -10,22 +10,24 @@
  * };
  */
 class Solution {
-    private:
-        void btaobtao(TreeNode* root,string& x,int &y){
-            if(root==NULL) return;
-             x=x+to_string(root->val);
-            if(root->left==NULL && root->right==NULL){
-               y+=stoi(x);
-            }
-            btaobtao(root->left,x,y);
-            btaobtao(root->right,x,y);
-            x.pop_back();
+    int sum=0;
+    public:
+    void help(TreeNode* root, string& s){
+        if(root==NULL){
+            return ;
         }
-public:
+        s+=to_string(root->val);
+        help(root->left,s);
+        help(root->right,s);
+         if(root->left==NULL && root->right==NULL){
+            sum+=stoi(s);
+        }
+        s.pop_back();
+
+    }
     int sumNumbers(TreeNode* root) {
-        string x="";
-        int y=0;
-        btaobtao(root,x,y);
-        return y;
+        string s;
+        help(root,s);
+        return sum;
     }
 };
