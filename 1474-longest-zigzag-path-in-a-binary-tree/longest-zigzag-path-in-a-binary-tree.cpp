@@ -9,24 +9,28 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {  
+class Solution {
     int maxi=0;
-    void solve(TreeNode* root,int steps,bool goleft){
-        if(root==NULL) return;
-        maxi=max(maxi,steps);
-        if(goleft==true){
-            solve(root->left,steps+1,false);
-            solve(root->right,1,true);
+public:
+     void  help(TreeNode* root,int step,bool left,bool right){
+        if(root==NULL){
+            return ;
+        }
+        maxi=max(maxi,step);
+        if(left){
+            help(root->left,step+1,false,true);
+            help(root->right,1,true,false);
         }
         else{
-            solve(root->right,steps+1,true);
-            solve(root->left,1,false);
+           help(root->right,step+1,true,false);
+            help(root->left,1,false,true);  
         }
-    }
+      }
 public:
     int longestZigZag(TreeNode* root) {
-        solve(root,0,true);
-        solve(root,0,false);
-        return maxi;
+      bool left=true,right=true;
+      int step=0;
+      help(root,step,left,right);  
+      return maxi;
     }
 };
