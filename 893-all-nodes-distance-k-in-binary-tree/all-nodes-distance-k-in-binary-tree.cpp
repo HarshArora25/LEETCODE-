@@ -7,84 +7,51 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-
 class Solution {
-private:
-
-    // Step 1: Store parents using BFS
-    void storeParents(unordered_map<TreeNode*, TreeNode*> &parent, TreeNode* root) {
-        queue<TreeNode*> q;
-        q.push(root);
-
-        while(!q.empty()) {
-            TreeNode* node = q.front();
-            q.pop();
-
-            if(node->left) {
-                parent[node->left] = node;
-                q.push(node->left);
-            }
-            if(node->right) {
-                parent[node->right] = node;
-                q.push(node->right);
-            }
-        }
+    private:
+    void find(TreeNode*root,TreeNode*target,int k,queue<pair<TreeNode*,int>>&qu, unordered_map<TreeNode*,bool>&vis,unordered_map<TreeNode*,      TreeNode*>mpp){
+              qu.push({target,0});
+              vis[target]=true;
+              while(!qu.empty()){
+              int size=qu.size();
+               if(qu.front().second==k)
+              break;
+              for(int i=0;i<size;i++){
+               TreeNode* fr=qu.front().first;
+               int step=qu.front().second;
+               qu.pop();
+               if(fr->left && !vis[fr->left]){ qu.push({fr->left,step+1});
+                vis[fr->left] = true;
+               }
+               if(fr->right && !vis[fr->right]){ qu.push({fr->right,step+1});
+                vis[fr->right] = true;
+               }
+               if(mpp[fr] && !vis[mpp[fr]]){ qu.push({mpp[fr],step+1});
+                vis[mpp[fr]] = true;
+               }
+              }
+              }
     }
-
 public:
+    void fillmap( unordered_map<TreeNode*,TreeNode*>&mpp,TreeNode* root){
+        if(root==NULL) return ;
+        if(root->left) mpp[root->left]=root;
+        if(root->right) mpp[root->right]=root;
+        fillmap(mpp,root->left);
+        fillmap(mpp,root->right);
+    }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-
-        // Parent map bana lo
-        unordered_map<TreeNode*, TreeNode*> parent;
-        storeParents(parent, root);
-
-        // BFS start from target
-        unordered_set<TreeNode*> visited;
-        queue<TreeNode*> q;
-
-        q.push(target);
-        visited.insert(target);
-
-        int level = 0;
-
-        while(!q.empty()) {
-
-            int size = q.size();
-            if(level == k) break;
-
-            while(size--) {
-                TreeNode* node = q.front();
-                q.pop();
-
-                // Left child
-                if(node->left && !visited.count(node->left)) {
-                    visited.insert(node->left);
-                    q.push(node->left);
-                }
-
-                // Right child
-                if(node->right && !visited.count(node->right)) {
-                    visited.insert(node->right);
-                    q.push(node->right);
-                }
-
-                // Parent
-                if(parent.count(node) && !visited.count(parent[node])) {
-                    visited.insert(parent[node]);
-                    q.push(parent[node]);
-                }
-            }
-
-            level++;
-        }
-
-        // Collect all nodes at distance K
-        vector<int> ans;
-        while(!q.empty()) {
-            ans.push_back(q.front()->val);
-            q.pop();
-        }
-
-        return ans;
+       queue<pair<TreeNode*,int>>qu;
+       unordered_map<TreeNode*,TreeNode*>mpp;
+       fillmap(mpp,root);
+       unordered_map<TreeNode*,bool>vis;
+    //    TreeNode* pos=posoftar(root,target);
+       find(root,target,k,qu,vis,mpp);
+       vector<int>res;
+       while(!qu.empty()){
+        res.push_back(qu.front().first->val);
+        qu.pop();
+       }
+       return res;
     }
 };
