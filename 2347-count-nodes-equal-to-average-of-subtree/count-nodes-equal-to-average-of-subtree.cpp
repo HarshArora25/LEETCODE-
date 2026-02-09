@@ -10,23 +10,19 @@
  * };
  */
 class Solution {
-int result=0;
 public:
-    pair<int,int> solve(TreeNode* root){
-        if(root==NULL)
-        return{0,0};
-    auto p1=solve(root->left);
-    auto p2=solve(root->right);
-    int totalsum=p1.first + p2.first + root->val;
-    int totalcount=p1.second + p2.second +1;
-    int avg=totalsum/totalcount;
-    if(root->val==avg)
-    result++;
-    return {totalsum,totalcount};
+    pair<int,int> solve(TreeNode* root,int &result){
+        if(root==NULL) return {0,0};
+        auto p1=solve(root->left,result);
+        auto p2=solve(root->right,result);
+        int totsum=root->val+p1.first+p2.first;
+        int totnod=p1.second+p2.second+1;
+        if(root->val==totsum/totnod) result++;
+        return {totsum,totnod};
     }
     int averageOfSubtree(TreeNode* root) {
-        result=0;
-        solve(root);
+        int result=0;
+        solve(root,result);
         return result;
     }
 };
