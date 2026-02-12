@@ -1,17 +1,17 @@
 class Solution {
+private:
+  int help(int n, vector<int>&dp){
+    if(n==0) return 1;
+    if(n<0) return 0;
+    if(dp[n] !=-1) return dp[n];
+    int left=help(n-1,dp);
+    int right=help(n-2,dp);
+    return dp[n]= left+right;
+  }
 public:
-    int find(vector<int>&dp,int n,int i){
-      if(i==n) return 1;
-      if(i>n) return 0;
-      if(dp[i] !=-1) return dp[i];
-      dp[i]=find(dp,n,i+1)+find(dp,n,i+2);
-      return dp[i];
-    }
-
     int climbStairs(int n) {
-      vector<int>dp(n+2,-1);
-      int i=0;
-     return find(dp,n,i);  
-      
+    vector<int>dp(n+1,-1);
+      help(n,dp);  
+      return dp[n];
     }
 };
