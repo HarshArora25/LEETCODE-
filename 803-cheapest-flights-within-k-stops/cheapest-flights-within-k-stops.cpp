@@ -21,7 +21,7 @@ for(auto &it : flights){
         for(auto& it:adjlist[node]){
             int adjnode=it.first;
             int adjprice=it.second;
-            if(price+adjprice<dist[adjnode] && stop<=k){
+            if(price+adjprice<dist[adjnode] ){
                 dist[adjnode]=price+adjprice;
                 q.push({adjnode,{stop+1,dist[adjnode]}});
             }
