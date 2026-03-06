@@ -1,20 +1,18 @@
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {
-          if(s.size() != t.size()) return false;
-        vector<int>mp1(256,-1);
-        vector<int>mp2(256,-1);
-        for(int i=0;i<s.size();i++){
-            char c1=s[i];
-            char c2=t[i];
-            if(mp1[c1] ==-1 && mp2[c2] ==-1){
-               mp1[c1]=c2;
-               mp2[c2]=c1; 
-            }
-           else {
-                if(mp1[c1] != c2 || mp2[c2] != c1)
-                    return false;
-            }
+        vector<int>map1(256,0);
+        vector<int>map2(256,0);
+        if(s.size() !=t.size()) return false;
+        int i=0;
+        while(i<s.size()){
+          if(map1[s[i]]==0 && map2[t[i]]==0){
+            map1[s[i]]=t[i];
+            map2[t[i]]=s[i];
+          }
+            else if(map1[s[i]] != t[i] || map2[t[i]] != s[i])
+          return false;
+          i++;
         }
         return true;
     }
