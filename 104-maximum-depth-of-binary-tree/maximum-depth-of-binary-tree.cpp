@@ -11,18 +11,14 @@
  */
 class Solution {
     private:
-    int maximum(int height,TreeNode* root,int& maxi){
+    int hiit(TreeNode* root){
         if(root==NULL) return 0;
-        maxi=max(maxi,height);
-        if(root->left)   maximum(height+1,root->left,maxi);
-        if(root->right)  maximum(height+1,root->right,maxi);
-        return maxi;
+        int lefty=hiit(root->left);
+        int ryty=hiit(root->right);
+        return 1+max(lefty,ryty);
     }
 public:
     int maxDepth(TreeNode* root) {
-        int height=1;
-        int maxi=INT_MIN;
-        return maximum(height,root,maxi);
-
+       return hiit(root);
     }
 };
