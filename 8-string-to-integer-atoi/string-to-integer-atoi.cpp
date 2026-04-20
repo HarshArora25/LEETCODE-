@@ -4,8 +4,8 @@ class Solution {
     void result(string& s,int i,int n){
         if(i>=n || !isdigit(s[i])) return ;
         res=res*10+(s[i]-'0');
-        if(sign==1 && res>INT_MAX) return;
-        if(sign==-1 && -res<INT_MIN) return;
+        if(res>INT_MAX) return;
+        if(res<INT_MIN) return;
         result(s,i+1,n); 
     }
 public:
