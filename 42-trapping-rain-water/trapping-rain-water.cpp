@@ -1,28 +1,29 @@
 class Solution {
     private:
-    void leftist(vector<int>&lefty,vector<int>height,int n){
-        lefty[0]=height[0];
-        for(int i=1;i<n;i++){
-            lefty[i]=max(height[i],lefty[i-1]);
+     void leftty(vector<int>&height,vector<int>&leftmaxi){
+        for(int i=1;i<height.size();i++){
+            leftmaxi[i]=max(leftmaxi[i-1],height[i]);
         }
-    }
-
-    void rightist(vector<int>&righty,vector<int>height,int n){
-        righty[n-1]=height[n-1];
-        for(int i=n-2;i>=0;i--){
-            righty[i]=max(height[i],righty[i+1]);
+     }
+     void rightty(vector<int>&height,vector<int>&rightmaxi){
+         for(int i=height.size()-2;i>=0;i--){
+            rightmaxi[i]=max(rightmaxi[i+1],height[i]);
         }
-    }
+     }
 public:
     int trap(vector<int>& height) {
-        int n=height.size();
-        vector<int>lefty(n),righty(n);
-        leftist(lefty,height,n);
-        rightist(righty,height,n);
-        int trapwater=0;
-        for(int i=0;i<n;i++){
-            trapwater+=(max(0,min(lefty[i],righty[i])-height[i]));
-        }
-        return trapwater;
+       vector<int>leftmaxi(height.size(),0);
+       leftmaxi[0]=height[0];
+       vector<int>rightmaxi(height.size(),0);
+       rightmaxi[height.size()-1]=height[height.size()-1];
+       leftty(height,leftmaxi); 
+       rightty(height,rightmaxi);
+
+       int sum=0;
+       for(int i=0;i<height.size();i++){
+        int mini=min(leftmaxi[i],rightmaxi[i]);
+        sum=sum+(mini-height[i]);
+       }
+       return sum;
     }
 };
