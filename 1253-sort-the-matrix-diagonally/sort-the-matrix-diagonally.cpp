@@ -1,23 +1,23 @@
 class Solution {
 public:
     vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
-      unordered_map<int,vector<int>>mpp;
-      for(int i=0;i<mat.size();i++){
-        for(int j=0;j<mat[0].size();j++){
-            mpp[i-j].push_back(mat[i][j]);
-        }
-      }
-      for (auto &it : mpp) {
-    sort(it.second.begin(), it.second.end(),greater<int>());
-}
-    
-     for(int i=0;i<mat.size();i++){
-        for(int j=0;j<mat[0].size();j++){
-             int key = i - j;
-                mat[i][j] = mpp[key].back();      
-                mpp[key].pop_back();             
+        int n=mat.size();
+        int m=mat[0].size();
+        unordered_map<int,vector<int>>mpp;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                mpp[i-j].push_back(mat[i][j]);
             }
         }
-        return mat; 
+        for(auto& it:mpp){
+            sort(it.second.begin(),it.second.end());
+        }
+        for(int i=n-1;i>=0;i--){
+            for(int j=m-1;j>=0;j--){
+                mat[i][j]=mpp[i-j].back();
+                mpp[i-j].pop_back();
+            }
+        }
+      return mat;
     }
 };
