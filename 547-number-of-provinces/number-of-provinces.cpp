@@ -1,43 +1,35 @@
 class Solution {
-private:
-vector<int>parent,rank;
-int findp(int node){
-    if(node==parent[node]) return node;
-    return parent[node]=findp(parent[node]);
-}
-void unnion(int u,int v){
- int pu=findp(u);
- int pv=findp(v);
-if(pu==pv) return ;
-if(rank[pu]<rank[pv]){
-    parent[pu]=pv;
-}
-else if(rank[pv]<rank[pu])
-  parent[pv]=pu;
-  else{
-    parent[pv]=pu;
-    rank[pu]++;
-  }
-}
 public:
     int findCircleNum(vector<vector<int>>& isConnected) {
-        int V=isConnected.size();
-        parent.resize(V);
-        rank.resize(V,0);
-        for(int i=0;i<V;i++) parent[i]=i;
-        for(int i=0;i<V;i++){
-            for(int j=i+1;j<V;j++){
-              if(isConnected[i][j]==1)
-               if (isConnected[i][j] == 1) {
-                    unnion(i, j);
-                }
-            }
+      int n=isConnected.size(); 
+      vector<int>adjlst[n];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+         if(isConnected[i][j]==1 && i!=j){
+           adjlst[i].push_back(j);
+         }
         }
-        int count = 0;
-        for (int i = 0; i < V; i++) {
-            if (findp(i) == i)
-                count++;
-        }
-        return count;
+    }
+    queue<int>qu;
+    vector<int>visited(n,0);
+    int count=0;
+    for(int i=0;i<n;i++){
+    if(!visited[i]){
+        count++;
+        qu.push(i);
+        visited[i]=1;
+    while(!qu.empty()){
+       int fr=qu.front();
+       qu.pop();
+       for(auto a:adjlst[fr]){
+        if(!visited[a]){
+        visited[a]=1;
+        qu.push(a);
+       }
+    }
+    }
+    }
+    }
+   return count;
     }
 };
