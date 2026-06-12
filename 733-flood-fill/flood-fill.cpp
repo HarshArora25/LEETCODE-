@@ -1,17 +1,25 @@
 class Solution {
-public:
-    void dfskr(vector<vector<int>>& image, int sr, int sc, int color,int orignal){
-        if(sr<0 || sr>=image.size() || sc<0 || sc>image[0].size() || image[sr][sc] !=orignal ) return ;
-        image[sr][sc]=color;
-        dfskr(image,sr-1,sc,color,orignal);
-        dfskr(image,sr+1,sc,color,orignal);
-        dfskr(image,sr,sc+1,color,orignal);
-        dfskr(image,sr,sc-1,color,orignal);
+private:
+  void dfs(vector<vector<int>>& image,int sr,int sc,int oldcolor,int newcolor,int n,int m){
+    image[sr][sc]=newcolor;
+    int nr[]={-1,0,1,0};
+    int nc[]={0,-1,0,1};
+    for(int i=0;i<4;i++){
+        int nowr=sr + nr[i];
+        int nowc=sc + nc[i];
+        if(nowr>=0 &&nowr<n && nowc>=0 && nowc<m && image[nowr][nowc]==oldcolor){
+            image[nowr][nowc]=newcolor;
+        dfs(image,nowr,nowc,oldcolor,newcolor,n,m);
+        }
     }
+  }
+public:
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-        int orignal=image[sr][sc];
-        if(color==orignal) return image;
-        dfskr(image,sr,sc,color,orignal);
-        return image;
+      int n=image.size();
+      int m=image[0].size();
+      int oldcolor=image[sr][sc];
+      if(oldcolor==color) return image;
+      dfs(image,sr,sc,oldcolor,color,n,m);
+      return image;
     }
 };
