@@ -1,25 +1,31 @@
 class Solution {
     private:
-    bool allcaptial(string word){
-        for(char&ch:word){
-         if(ch<'A' || ch>'Z')
-         return false;
+    bool islower(string x){
+        int n=x.size();
+    for(int i=0;i<n;i++){
+        if(x[i]<'a' ||x[i]>'z'){
+        return false;
         }
-        return true;
     }
-
-    bool allsmall(string word){
-     for(char&ch:word){
-         if(ch<'a' || ch>'z')
-         return false;
+    return true;
+    }
+    bool isupper(string x){
+        int n=x.size();
+    for(int i=0;i<n;i++){
+        if(x[i]<'A' ||x[i]>'Z'){
+        return false;
         }
-        return true;    
+    }
+    return true;
     }
 public:
     bool detectCapitalUse(string word) {
-     if( allcaptial(word) || allsmall(word) || allsmall(word.substr(1))){
-        return true;
-     }   
-     return false;
+    int n=word.size();
+    string x=word.substr(0,1);
+    string y=word.substr(1,n);    
+    if(isupper(x) && islower(y)) return true;
+    if(isupper(word)) return true;
+    if(islower(word)) return true;
+    return false;
     }
 };
