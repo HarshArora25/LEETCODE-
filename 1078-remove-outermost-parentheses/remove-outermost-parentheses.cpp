@@ -1,20 +1,21 @@
 class Solution {
 public:
     string removeOuterParentheses(string s) {
-       string res="";
-       int balance=0;
-       for(int i=0;i<s.size();i++){
-        if(s[i]=='('){
-            if(balance>0) 
+        int n=s.size();
+        int bal=0;
+        string res="";
+        for(int i=0;i<n;i++){
+           if(s[i]=='('){
+            if(bal>0)
+                res+=s[i];
+                bal++;
+           }
+           else{
+            bal--;
+            if(bal)
             res+=s[i];
-            balance++;
+           }
         }
-        else{
-            balance--;
-            if(balance>0)
-            res+=s[i];
-        }
-       }
-       return res;
+        return res;
     }
 };
