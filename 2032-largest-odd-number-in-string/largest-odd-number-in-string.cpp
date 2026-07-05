@@ -1,23 +1,19 @@
 class Solution {
+    private:
+    bool charac(char ch){
+        if(ch=='1' || ch=='3' || ch=='5' || ch=='7' || ch=='9')
+        return true;
+        else
+        return false;
+    }
 public:
     string largestOddNumber(string num) {
-      int i=0;int j=num.size()-1;
+      int j=num.size();
       while(j>=0){
-        int dig=num[j]-'0';
-        if(dig%2 !=0){
-            break;
-        }
+        if(charac(num[j]))
+        break;
         j--;
-      }  
-      string res="";
-      if(j>=0){
-        while(i<=j){
-            res+=num[i];
-            i++;
-        }
       }
-      else
-      return "";
-      return res;
+      return num.substr(0,j+1);
     }
 };
