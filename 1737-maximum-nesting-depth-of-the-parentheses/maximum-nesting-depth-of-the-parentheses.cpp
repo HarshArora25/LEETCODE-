@@ -1,14 +1,15 @@
 class Solution {
 public:
     int maxDepth(string s) {
-        int balance=0,maxi=0;
-        for(int i=0;i<s.size();i++){
-            if(s[i]=='(')
-                balance++;
-            else if(s[i]==')')
-            balance--;
-            maxi=max(maxi,balance);
-        }
-        return maxi;
+      int count=0;
+      int maxi=-1e9;
+      for(auto& it:s){
+        if(it=='(')
+        count++;
+        else if(it==')')
+        count--;
+        maxi=max(maxi,count);
+      }  
+      return maxi;
     }
 };
