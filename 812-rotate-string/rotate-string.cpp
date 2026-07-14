@@ -7,10 +7,7 @@ public:
         for(int i=0;i<n;i++){
             string x=s.substr(0,i);
             string y=s.substr(i,n);
-            reverse(x.begin(),x.end());
-            reverse(y.begin(),y.end());
-            string res=x+y;
-            reverse(res.begin(),res.end());
+            string res=y+x;
             if(res==goal) return true;
         }
        return false;
