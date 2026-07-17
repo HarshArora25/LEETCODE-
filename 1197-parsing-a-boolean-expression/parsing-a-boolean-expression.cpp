@@ -1,44 +1,50 @@
 class Solution {
+    char helpme(char sign,vector<char>& vt,stack<char>&st){
+        int i=0;
+        int n=vt.size();
+        if(sign=='|'){
+            while(i<n){
+            if(vt[i]=='t') 
+            return 't';
+            i++;
+            }
+            return 'f';
+        }
+        else if(sign=='&'){
+            while(i<n){
+            if(vt[i]=='f') return 'f';  
+            i++;
+            }  
+            return 't';
+        }
+        else{
+            if(vt[0]=='t') return 'f';
+            return 't';
+        }
+    }
 public:
- char solveexpression(vector<char>&values,char operat){
-    if(operat=='!'){
-        return values[0]=='t'?'f':'t';
-    }
-    if(operat=='&'){
-        for(char& ch:values){
-            if(ch=='f')
-            return 'f';
-        }
-         return 't';
-    }
-    if(operat == '|') {
-            for(char& ch : values) {
-                if(ch == 't') return 't';
-            }
-            return 'f';
-        }
-
-        return 't'; // fallback
- }
-    bool parseBoolExpr(string expression) {
-        stack<char>st;
-       for(int i=0;i<expression.size();i++){
-        if(expression[i]==',')
+    bool parseBoolExpr(string s) {
+      int n =s.size();
+      stack<char>st;
+      for(char& ch:s){
+        if(ch==',')
         continue;
-        else if(expression[i]==')'){
+        else if(ch==')'){
             vector<char>vt;
-            while(st.top() !='('){
-                vt.push_back(st.top());
-                st.pop();
-            }
+            while(!st.empty() && st.top() !='('){
+            if(st.top()=='t'  || st.top()=='f')
+            vt.push_back(st.top());
             st.pop();
-            char operat=st.top();
-            st.pop();
-            st.push(solveexpression(vt,operat));
         }
-         else
-         st.push(expression[i]);
-       } 
-       return st.top()=='t';
+        st.pop();
+        char sign=st.top();
+        st.pop();
+        char x=helpme(sign,vt,st);
+        st.push(x);
+        }
+        else
+        st.push(ch);
+      }
+      return st.top()=='t';
     }
 };
