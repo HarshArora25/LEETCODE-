@@ -1,26 +1,18 @@
 class Solution {
-    private:
-    int find(int i,int j,int n,int sum,vector<int>&nums,int goal,int count){
-          if(goal<0) return 0;
-        while(j<n){
-         sum+=nums[j];
-         while(sum>goal){
-            sum=sum-nums[i];
-            i++;
-         }
-         count= count+(j-i+1);
-         j++;
-        }
-        return count;
-    }
 public:
     int numSubarraysWithSum(vector<int>& nums, int goal) {
-          int i=0;
-          int j=0;
-          int n=nums.size();
-          int sum=0;
-          int count=0;
-          return find(i,j,n,sum,nums,goal,count) - find(i,j,n,sum,nums,goal-1,count) ;
-       
+      int n=nums.size();
+      unordered_map<int,int>mpp;
+      vector<int>prefix(n,0);
+      long long sum=0,count=0;
+      mpp[0]=1;
+      for(int i=0;i<n;i++){
+       sum+=nums[i];
+       int diff=sum-goal;
+       if(mpp.find(diff) !=mpp.end())
+        count+=mpp[diff];
+        mpp[sum]++;
+      }
+      return count;
     }
 };
