@@ -10,14 +10,16 @@ public:
         }
         queue<int>qu;
         qu.push(src);
-        // visited[src]=1;
+         visited[src]=1;
         while(!qu.empty()){
             int elem=qu.front();
             qu.pop();
-            visited[elem]=1;
+            if(elem==destination) return true;
             for(auto& it:adjl[elem]){
-                if(!visited[it])
+                if(!visited[it]){
                 qu.push(it);
+                visited[it]=1;
+                }
             }
         }
         if(visited[destination] ==0) return false;
