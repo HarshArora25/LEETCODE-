@@ -1,25 +1,30 @@
 class Solution {
-private:
-    bool dfs(vector<int>&visited,vector<vector<int>>& graph,int n,int i,int par){
-      visited[i]=par;
-        for(auto it:graph[i]){
-             if(visited[it]==-1){
-          if(!dfs(visited,graph,n,it,!par))
-          return false;
-        }
-      else if(visited[i]==visited[it]) return false;
-        }
-       return true;
-    }
+// private:
+//    bool dfs(vector<vector<int>>&graph,int n,vector<int>color,int parent,int child){
+    
+//    }
 public:
     bool isBipartite(vector<vector<int>>& graph) {
-       int n=graph.size();
-       vector<int>visited(n,-1);
-       for(int i=0;i<n;i++){
-        if(visited[i] ==-1)
-       if( !dfs(visited,graph,n,i,0))
-       return false;
-       } 
-       return true;
+        int n=graph.size();
+        vector<int>color(n,-1);
+        // dfs(graph,n,color,-1,0);
+        color[0]=0;
+        for(int i=0;i<n;i++){
+        queue<int>qu;
+        qu.push(i);
+        while(!qu.empty()){
+            int parent=qu.front();
+            qu.pop();
+        for(auto it:graph[parent]){
+            if(color[it] ==-1){
+                color[it]=!color[parent];
+                qu.push(it);
+            }
+            else if(color[parent]==color[it])
+            return false;
+        }
+        }
+        }
+        return true;
     }
 };
