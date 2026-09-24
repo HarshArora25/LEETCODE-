@@ -10,21 +10,14 @@
  * };
  */
 class Solution {
-    private:
-    bool btaobtao(TreeNode* a,TreeNode* b){
-         if(a==NULL && b==NULL) 
-        return true;
-        if(a==NULL || b==NULL)
-        return false;
-        if(a->val !=b->val)
-        return false;
-        return btaobtao(a->left,b->right) && btaobtao(a->right, b->left);
-    }
+bool check(TreeNode* root1,TreeNode* root2){
+    if(root1==NULL && root2==NULL) return true;
+    if(root1==NULL || root2==NULL) return false;
+    if(root1->val != root2-> val) return false;
+    return check(root1->left,root2->right) && check(root1->right,root2->left);
+}
 public:
     bool isSymmetric(TreeNode* root) {
-      if(root==NULL) return NULL;
-      TreeNode* a=root->left;
-      TreeNode* b=root->right;
-      return btaobtao(a,b); 
+     return check(root->left,root->right);   
     }
 };
