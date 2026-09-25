@@ -1,23 +1,19 @@
 class Solution {
-    private:
-    void sub(vector<vector<int>>&x,vector<int>& nums,int idx, vector<int>&y){
-        if(idx<0){
-        x.push_back(y);
+private:
+    void helper(vector<vector<int>>&ans,int n,vector<int>&nums,vector<int>&x,int i){
+        if(i==n){ans.push_back(x); return ; }
+        x.push_back(nums[i]);
+        helper(ans,n,nums,x,i+1);
+        x.pop_back();
+        helper(ans,n,nums,x,i+1);
         return ;
-        }
-         y.push_back(nums[idx]);
-        sub(x,nums,idx-1,y);
-         y.pop_back();
-        sub(x,nums,idx-1,y);
-        
     }
-
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
-     vector<vector<int>>x;
-     int idx=nums.size()-1;
-      vector<int>y;
-     sub(x,nums,idx,y);
-     return x;
+       vector<vector<int>>ans;
+       int n=nums.size();
+       vector<int>x;
+       helper(ans,n,nums,x,0);
+       return ans;
     }
 };
