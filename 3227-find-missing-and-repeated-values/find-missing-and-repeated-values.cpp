@@ -1,24 +1,28 @@
 class Solution {
 public:
     vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
-        int n=grid.size();
-        int m=grid[0].size();
-        long long x=m*n;
-        long long expsum= ((x)*( (x )+1))/2;
-        long long expsqsum=(x)*  ((x )+1)* (2*(x)+1)/6;
-        long long sqsum=0,sum=0;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                sum+=grid[i][j];
-                sqsum=sqsum+(grid[i][j] * grid[i][j]);
-            }
+       int no=grid.size();
+       int m=grid[0].size();
+       int sum=0;
+       vector<int>ans;
+       for(int i=0;i<no;i++){
+        for(int j=0;j<m;j++){
+         ans.push_back(grid[i][j]);
+         sum+=grid[i][j];
         }
-        long long val1=expsum-sum;
-        long long val2= (expsqsum-sqsum)/val1;
-        int miss= (val1+val2)/2;
-        int repeat=miss-val1;
-        return {repeat,miss};
-
-
+       }
+       int val=0;
+       int n=ans.size();
+      sort(ans.begin(),ans.end());
+      for(int i=1;i<n;i++){
+       if(ans[i]==ans[i-1]){
+       val=ans[i];
+       break;
+       }
+      }
+      sum=sum-val;
+      int expsum=(n*(n+1))/2;
+      int missing=expsum-sum;
+      return{val,missing};
     }
 };
