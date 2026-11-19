@@ -1,20 +1,29 @@
 class Solution {
 public:
     string intToRoman(int num) {
-     vector<int>val{1000,900,500,400,100,90,50,40,10,9,5,4,1};
-     vector<string>roman{"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
-     string res="";
-     int i=0;
-    
-     for(int j=0;j<val.size();j++){
-        int times=num/val[j];
-       if(times){
-         for(int i=0;i<times;i++)
-         res=res+roman[j];
-       }
-       num=num%val[j];
-     }
-     return res;
-      
+  map<int, string, greater<int>> mpp = {
+    {1000, "M"},
+    {900, "CM"},
+    {500, "D"},
+    {400, "CD"},
+    {100, "C"},
+    {90, "XC"},
+    {40,"XL"},
+    {50, "L"},
+    {10, "X"},
+    {9, "IX"},
+    {5, "V"},
+    {4, "IV"},
+    {1, "I"}
+};
+   string neww="";
+    for(auto& it:mpp){
+    int times=num/it.first;
+    while(times--){
+        neww+=it.second;
+    }
+    num=num%it.first;
+    }
+    return neww;
     }
 };
