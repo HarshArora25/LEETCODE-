@@ -1,25 +1,36 @@
 class Solution {
-    private:
-    bool isvowel(char f){
-        if(f=='a' || f=='e' || f=='i'  || f=='o' || f=='u' || f=='A' ||f=='E' ||f=='I' ||f=='O' ||f=='U')
-        return true;
-        else 
-        return false;
+private:
+    bool isvowel(char x){
+    if(x=='a' || x=='e' || x=='i' || x=='o' || x=='u' || x=='A' || x=='E' ||   x=='I' || x=='O' || x=='U')
+    return true;
+    return false;
     }
 public:
     bool halvesAreAlike(string s) {
-       int n=s.size();
-       if(n%2 !=0) return false;
-       int frsthalf=0,scndhlf=0;
-       int m=n/2;
-       for(int i=0;i<m;i++){
-        if(isvowel(s[i]))
-        frsthalf++;
-       } 
-       for(int i=m;i<n;i++){
-        if(isvowel(s[i]))
-        scndhlf++;
-       }
-       return frsthalf==scndhlf;
+        int n=s.size();
+        if(n%2==1) return false;
+        int i=0;
+        int j=n-1;
+        int vow1=0;
+        int vow2=0;
+        int const1=0;
+        int const2=0;
+        while(i<j){
+          if(isvowel(s[i])){
+            vow1++;
+          }
+          else{
+            const1++;
+          }
+          if(isvowel(s[j])){
+            vow2++;
+          }
+          else{
+            const2++;
+          }
+          i++;
+          j--;
+        }
+       return const1==const2 && vow1==vow2;
     }
 };
