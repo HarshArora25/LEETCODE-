@@ -1,25 +1,26 @@
 class Solution {
 public:
     int countPalindromicSubsequence(string s) {
-      vector<int>leftpos(26,-1),rytpos(26,-1);
-      int n=s.size();
-      for(int i=0;i<n;i++){
-        if(leftpos[s[i]-'a'] ==-1)
-        leftpos[s[i]-'a']=i;
-        rytpos[s[i]-'a']=i;
-      }  
-      unordered_set<string>stt;
-      for(int i=0;i<26;i++){
-        if(rytpos[i]-leftpos[i]>=2){
-            for(int j=leftpos[i]+1;j<rytpos[i];j++){
-               string neww = "";
-               neww += char(i+'a');
-               neww += s[j];
-              neww += char(i-'a');
-                stt.insert(neww);
-            }
+    int n=s.size();
+    vector<int>left(26,-1);
+    vector<int>ryt(26,-1);
+    for(int i=0;i<n;i++){
+        if(left[s[i]-'a']==-1)
+        left[s[i]-'a']=i;
+        ryt[s[i]-'a']=i;
+    }
+    int count=0;
+    for(int i=0;i<26;i++){
+        if(ryt[i]-left[i]<2) continue;
+        vector<int>vis(26,0);
+        for(int j=left[i]+1;j<ryt[i];j++){
+            vis[s[j]-'a']=1;
         }
-      }
-      return stt.size();
+        for(int j=0;j<26;j++){
+            if(vis[j]>0)
+            count++;
+        }
+    }
+    return count;
     }
 };
